@@ -6,7 +6,8 @@ import javax.persistence.*;
 
 @Getter
 @Setter
-@ToString
+//jpa 연관관계 매핑에서 연관관계 데이터는 Tostring에서 제외해야 한다.
+@ToString(exclude = {"department"})
 @EqualsAndHashCode(of="id")
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,8 +24,15 @@ public class Employee {
     @Column(name = "emp_name", nullable = false)
     private  String name;
 
-    @ManyToOne
+    // EAGER: 항상 무조건 조인을 수행 ( default 값)
+    // LAZY: 필요한 경우에만 조인을 수행 (실무)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "dept_id")
     private Department department;
+
+    public void setDepartment(Department department){
+        this.department = department;
+        department.getEmployees().add(this);
+    }
 
 }
