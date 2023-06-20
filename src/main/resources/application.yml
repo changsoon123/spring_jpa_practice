@@ -22,3 +22,8 @@ logging:
   level:
     org.hibernate.SQL: DEBUG
 
+# swagger setting
+springdoc:
+  swagger-ui:
+    path: /myapi.html
+
